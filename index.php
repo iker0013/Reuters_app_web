@@ -132,8 +132,16 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>100</h3>
-
+                  <h3> 
+                    <?php
+                    //The URL with the informtion to GET from API
+                    $url = 'http://localhost:60863/api/datos_dashboard_user/1';
+                    $contents = file_get_contents($url);
+                    $array = explode(",", $contents);
+                    $nHotDesk = explode(":", $array[1]);
+                    echo substr($nHotDesk[1],1,-2);
+                    ?>
+                  </h3>
                   <p>Hot Desk</p>
                 </div>
                 <div class="icon">
@@ -146,8 +154,14 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>96</sup></h3>
-
+                  <h3><?php
+                    //The URL with the informtion to GET from API
+                    $url = 'http://localhost:60863/api/datos_dashboard_user/3';
+                    $contents = file_get_contents($url);
+                    $array = explode(",", $contents);
+                    $nHotDeskDis = explode(":", $array[1]);
+                    echo substr($nHotDeskDis[1],1,-2);
+                    ?></sup></h3>
                   <p>Hot Desk disponibles</p>
                 </div>
                 <div class="icon">
@@ -160,7 +174,14 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>125</h3>
+                  <h3><?php
+                    //The URL with the informtion to GET from API
+                    $url = 'http://localhost:60863/api/datos_dashboard_user/2';
+                    $contents = file_get_contents($url);
+                    $array = explode(",", $contents);
+                    $nUser = explode(":", $array[1]);
+                    echo substr($nUser[1],1,-2);
+                    ?></h3>
 
                   <p>Usuarios registrados</p>
                 </div>
@@ -174,7 +195,14 @@
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>4</h3>
+                  <h3><?php
+                    //The URL with the informtion to GET from API
+                    $url = 'http://localhost:60863/api/datos_dashboard_user/4';
+                    $contents = file_get_contents($url);
+                    $array = explode(",", $contents);
+                    $nUserOffice = explode(":", $array[1]);
+                    echo substr($nUserOffice[1],1,-2);
+                    ?></h3>
 
                   <p>Usuarios en la oficina</p>
                 </div>
