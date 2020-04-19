@@ -31,7 +31,14 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
-
+    <?php
+     //Variables from login
+      $nombre = htmlspecialchars($_GET['nombre']);
+      $num_emp = htmlspecialchars($_GET['num_emp']); 
+      session_start();
+      $_SESSION["nombre_emp"]=$nombre;
+      $_SESSION["numero_emp"]=$num_emp;
+    ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
@@ -45,13 +52,8 @@
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img
-              src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/p960x960/79914140_2476795765892705_7171981350025560064_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=duVZOAg8MV4AX9L6jr0&_nc_ht=scontent-dfw5-1.xx&_nc_tp=6&oh=32e4887525664ad5bcb9d0dc65a0e60a&oe=5EEBEA52"
-              class="img-circle elevation-2" alt="User Image">
-          </div>
           <div class="info">
-            <a href="#" class="d-block">Jesús Torres</a>
+            <a href="#" class="d-block"><?php echo $_SESSION["nombre_emp"] ?></a>
           </div>
         </div>
 
@@ -221,76 +223,43 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Usuarios activos</h3>
-
-
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body p-0">
-                  <ul class="products-list product-list-in-card pl-2 pr-2">
-                    <li class="item">
-                      <div class="product-img">
-                        <img
-                          src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/87337452_3042474519116652_7652709549043875840_n.jpg?_nc_cat=111&_nc_sid=85a577&_nc_ohc=6oJbVvu8Ij8AX9UtGae&_nc_ht=scontent-dfw5-1.xx&oh=4fd7bff59bea11e7cc4ec0a16467931a&oe=5EF8DE44"
-                          alt="Product Image" class="img-size-50">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">Itzel Peña
-                          <span class="badge badge-success float-right">55</span></a>
-                        <span class="product-description">
-                          Lawyers and Accountants
-                        </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img
-                          src="https://scontent-dfw5-2.xx.fbcdn.net/v/t31.0-8/s960x960/21586968_1434970339919994_498461052597546266_o.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=YCl5FF5SjPoAX9qetYP&_nc_ht=scontent-dfw5-2.xx&_nc_tp=7&oh=96a0348c9b581a1a5ba0b48ad25a5a19&oe=5EF22FAA"
-                          alt="Product Image" class="img-size-50">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">Luis Lopez
-                          <span class="badge badge-success float-right">96</span></a>
-                        <span class="product-description">
-                          IT Team
-                        </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img
-                          src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/71690826_3624098470949813_4534867874048638976_n.jpg?_nc_cat=111&_nc_sid=85a577&_nc_ohc=rD0X3L6sr3QAX9r3CNV&_nc_ht=scontent-dfw5-1.xx&oh=1eea321e59ea396ad20e7e34a17a9df0&oe=5EC02080"
-                          alt="Product Image" class="img-size-50">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">
-                          Manuel Solorzano
-                          <span class="badge badge-success float-right">12</span></a>
-                        </a>
-                        <span class="product-description">
-                          Infra Team
-                        </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img
-                          src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/69201300_2841923612505631_388531318645850112_n.jpg?_nc_cat=105&_nc_sid=85a577&_nc_ohc=m3tiYsTTFRgAX-8QCRE&_nc_ht=scontent-dfw5-1.xx&oh=68b3640caa32a70cbfba5c0c1651630e&oe=5EF3A1CB"
-                          alt="Product Image" class="img-size-50">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">Paola Sanchez
-                          <span class="badge badge-success float-right">34</span></a>
-                        <span class="product-description">
-                          Claims and Rebates
-                        </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                  </ul>
-                </div>
+                <?php
+                $url = 'http://localhost:60863/api/datos_dashboard_user/5';
+                $contents = file_get_contents($url);
+                $contents = str_replace('"','', $contents); //Cleans de string
+                //Check if it has to display the table or not
+                $find = "codigo: 0";
+                $pos = strpos($contents, $find);
+                if($pos===false){
+                  $array = explode("|", $contents);
+                  $rows = sizeof($array);
+                  ?>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                      <ul class="products-list product-list-in-card pl-2 pr-2">
+                        <?php $n=1;
+                          for($i=0; $i<$rows-1; $i++): 
+                            $innerArr = explode(",", $array[$i]);
+                            ?>
+                            <li class="item">
+                              <div class="product-info">
+                                <a href="javascript:void(0)" class="product-title"><?php echo substr($innerArr[$n],7)?>
+                                  <span class="badge badge-success float-right"><?php echo substr($innerArr[$n+2],13)?></span></a>
+                                <span class="product-description">
+                                  <?php echo substr($innerArr[$n+1],5)?>
+                                </span>
+                              </div>
+                            </li>
+                        <?php $n=2; //The first array is shorter than the others so the value must go up
+                        endfor; ?>
+                      </ul>
+                    </div>
+                  <?php
+                }else{
+                  echo "&nbsp;&nbsp; No hay usuarios en la oficina";
+				}
+                ?>
                 <!-- /.card-body -->
                 <!-- /.card-footer -->
               </div>
@@ -303,64 +272,51 @@
                 <div class="card-header border-0">
                   <h3 class="card-title">Próximas reservaciones</h3>
                 </div>
-                <div class="card-body table-responsive p-0">
-                  <table class="table table-striped table-valign-middle">
-                    <thead>
-                      <tr>
-                        <th>Número de Hot Desk</th>
-                        <th>Fecha</th>
-                        <th>Hora Inicio</th>
-                        <th>Hora Fin</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <img
-                            src="http://176.32.230.6/beresfordbusinesscentre.co.uk/wp-content/uploads/2016/03/desk-icon.png"
-                            alt="Product 1" class="img-circle img-size-32 mr-2">
-                          22
-                        </td>
-                        <td>27/02/2020</td>
-                        <td>9:00 a.m.</td>
-                        <td>10:00 a.m.</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img
-                            src="http://176.32.230.6/beresfordbusinesscentre.co.uk/wp-content/uploads/2016/03/desk-icon.png"
-                            alt="Product 1" class="img-circle img-size-32 mr-2">
-                          11
-                        </td>
-                        <td>28/02/2020</td>
-                        <td>13:00 p.m.</td>
-                        <td>14:00 p.m.</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img
-                            src="http://176.32.230.6/beresfordbusinesscentre.co.uk/wp-content/uploads/2016/03/desk-icon.png"
-                            alt="Product 1" class="img-circle img-size-32 mr-2">
-                          11
-                        </td>
-                        <td>28/02/2020</td>
-                        <td>17:00 p.m.</td>
-                        <td>18:00 p.m.</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img
-                            src="http://176.32.230.6/beresfordbusinesscentre.co.uk/wp-content/uploads/2016/03/desk-icon.png"
-                            alt="Product 1" class="img-circle img-size-32 mr-2">
-                          58
-                        </td>
-                        <td>01/03/2020</td>
-                        <td>15:00 p.m.</td>
-                        <td>16:00 p.m.</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <?php
+                $url = 'http://localhost:60863/api/proximas_reservaciones/'.$_SESSION["numero_emp"];
+                $contents = file_get_contents($url);
+                $contents = str_replace('"','', $contents); //Cleans de string
+                //Check if it has to display the table or not
+                $find = "codigo: 0";
+                $pos = strpos($contents, $find);
+                if($pos===false){
+                    $array = explode("|", $contents);
+                    $rows = sizeof($array);
+                    ?>
+                      <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-valign-middle">
+                          <thead>
+                            <tr>
+                              <th>Número de Hot Desk</th>
+                              <th>Fecha</th>
+                              <th>Hora Inicio</th>
+                              <th>Hora Fin</th>
+                            </tr>
+                            <tbody>
+                              <?php $n=1; 
+                                for($i=0; $i<$rows-1; $i++): 
+                                  $innerArr = explode(",", $array[$i]);
+                                ?>
+                                <tr>
+                                  <td><img
+                                    src="http://176.32.230.6/beresfordbusinesscentre.co.uk/wp-content/uploads/2016/03/desk-icon.png"
+                                    alt="Product 1" class="img-circle img-size-32 mr-2">
+                                    <?php echo substr($innerArr[$n],13)?></td>
+                                  <td><?php echo substr($innerArr[$n+1],7, 11)?></td>
+                                  <td><?php echo substr($innerArr[$n+2],14)?></td>
+                                  <td><?php echo substr($innerArr[$n+3],13)?></td>
+                                </tr>
+                              <?php $n=2; //The first array is shorter than the others so the value must go up
+                              endfor; ?>
+                            </tbody>
+                          </thead>
+                        </table>
+                      </div>
+                    <?php
+				}else{
+                    echo "&nbsp;&nbsp; No tiene proximas reservaciones";
+				}
+                ?>
               </div>
 
             </section>
