@@ -22,10 +22,10 @@
             $cod= substr($cod[1],1,-1);
             //Validar usario existente
             if($cod=="1"){
-                $user = explode(":", $array[1]);
-                $adm = explode(":", $array[2]);
-                $user = substr($user[1],1,-1);
-                $adm = substr($adm[1],1,-2);
+                $adm = explode(":", $array[1]);
+                $user = explode(":", $array[2]);
+                $adm = substr($adm[1],1,-1);
+                $user = substr($user[1],1,-2);
                 //Validar si es administrador o usuario
                 if($adm=="1"){
                   header("Location: ../../indexAdmin.php?user=".$strUserName);
