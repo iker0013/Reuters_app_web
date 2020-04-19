@@ -31,7 +31,14 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
-
+     <?php
+     //Variables from login
+      $nombre = htmlspecialchars($_GET['nombre']);
+      $num_emp = htmlspecialchars($_GET['num_emp']); 
+      session_start();
+      $_SESSION["nombre_emp"]=$nombre;
+      $_SESSION["numero_emp"]=$num_emp;
+    ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
@@ -45,13 +52,8 @@
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img
-              src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/p960x960/79914140_2476795765892705_7171981350025560064_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=duVZOAg8MV4AX9L6jr0&_nc_ht=scontent-dfw5-1.xx&_nc_tp=6&oh=32e4887525664ad5bcb9d0dc65a0e60a&oe=5EEBEA52"
-              class="img-circle elevation-2" alt="User Image">
-          </div>
           <div class="info">
-            <a href="#" class="d-block">Jesús Torres</a>
+            <a href="#" class="d-block"><?php echo $_SESSION["nombre_emp"] ?></a>
           </div>
         </div>
 
