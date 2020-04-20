@@ -33,11 +33,13 @@
   <div class="wrapper">
      <?php
      //Variables from login
-      $nombre = htmlspecialchars($_GET['nombre']);
-      $num_emp = htmlspecialchars($_GET['num_emp']); 
       session_start();
-      $_SESSION["nombre_emp"]=$nombre;
-      $_SESSION["numero_emp"]=$num_emp;
+      if(empty($_SESSION)){
+        $nombre = htmlspecialchars($_GET['nombre']);
+        $num_emp = htmlspecialchars($_GET['num_emp']); 
+        $_SESSION["nombre_emp"]=$nombre;
+        $_SESSION["numero_emp"]=$num_emp;
+       }
     ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
