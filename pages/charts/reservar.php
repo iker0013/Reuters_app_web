@@ -30,6 +30,9 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
+<?php
+  session_start();
+?>
 <div class="wrapper">
   <!-- Navbar -->
 
@@ -48,13 +51,8 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img
-            src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/p960x960/79914140_2476795765892705_7171981350025560064_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=duVZOAg8MV4AX9L6jr0&_nc_ht=scontent-dfw5-1.xx&_nc_tp=6&oh=32e4887525664ad5bcb9d0dc65a0e60a&oe=5EEBEA52"
-            class="img-circle elevation-2" alt="User Image">
-        </div>
         <div class="info">
-          <a href="#" class="d-block">Jesús Torres</a>
+          <a href="#" class="d-block"><?php echo $_SESSION["nombre_emp"]?></a>
         </div>
       </div>
 
@@ -91,12 +89,6 @@
                 <a href="./modificar_reserva.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Modificar reservación</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cancelar reservación</p>
                 </a>
               </li>
             </ul>
