@@ -19,6 +19,9 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
+<?php
+  session_start();
+?>
 <div class="wrapper">
   <!-- Navbar -->
   
@@ -37,13 +40,8 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img
-            src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/p960x960/79914140_2476795765892705_7171981350025560064_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=duVZOAg8MV4AX9L6jr0&_nc_ht=scontent-dfw5-1.xx&_nc_tp=6&oh=32e4887525664ad5bcb9d0dc65a0e60a&oe=5EEBEA52"
-            class="img-circle elevation-2" alt="User Image">
-        </div>
         <div class="info">
-          <a href="#" class="d-block">Jesús Torres</a>
+          <a href="#" class="d-block"><?php echo $_SESSION["nombre_emp"]?></a>
         </div>
       </div>
 
@@ -126,56 +124,58 @@
               <h3 class="card-title">Lista de Usuarios</h3>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Número de empleado</th>
-                  <th>Nombre</th>
-                  <th>Correo</th>
-                  <th>Area</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>2850</td>
-                  <td>Iker Bring Anaya</td>
-                  <td>iker@hotmail.com</td>
-                  <td>Sistemas</td>
-                  <td>Activo</td>
-                  <td><button type="submit" class="btn btn-info">Modificar</button> <button type="button" class="btn btn-danger">Dar de baja</button></td>
-                </tr>
-                <tr>
-                  <td>2020</td>
-                  <td>Juan Lopez Ramirez</td>
-                  <td>juan@gmail.com</td>
-                  <td>Ventas</td>
-                  <td>Activo</td>
-                  <td><button type="submit" class="btn btn-info">Modificar</button> <button type="button" class="btn btn-danger">Dar de baja</button></td>
-                </tr>
-                <tr>
-                  <td>3720</td>
-                  <td>Andres Galindo Cruz</td>
-                  <td>andres@gmail.com</td>
-                  <td>Ventas</td>
-                  <td>Activo</td>
-                  <td><button type="submit" class="btn btn-info">Modificar</button> <button type="button" class="btn btn-danger">Dar de baja</button></td>
-                </tr>
-                <tr>
-                  <td>3289</td>
-                  <td>Rodrigo Garcia Rodriguez</td>
-                  <td>rodrigo@gmail.com</td>
-                  <td>Ventas</td>
-                  <td>Inactivo</td>
-                  <td><button type="submit" class="btn btn-info">Modificar</button> <button type="button" class="btn btn-danger">Dar de baja</button></td>
-                </tr>
-                
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.card-body -->
+            <?php
+                $url = 'http://localhost:60863/api/todos_usuarios/';
+                $contents = file_get_contents($url);
+                $contents = str_replace('"','', $contents); //Cleans de string
+                //Check if it has to display the table or not
+                $find = "codigo: 0";
+                $pos = strpos($contents, $find);
+                if($pos===false){
+                    $array = explode("|", $contents);
+                    $rows = sizeof($array);
+                    ?>
+                      <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th>Número de empleado</th>
+                              <th>Nombre</th>
+                              <th>Correo</th>
+                              <th>Area</th>
+                              <th>Status</th>
+                              <th></th>
+                            </tr>
+                            <tbody>
+                              <?php $n=1; 
+                                for($i=0; $i<$rows-1; $i++): 
+                                  $innerArr = explode(",", $array[$i]);
+                                ?>
+                                <tr>
+                                  <td><?php echo substr($innerArr[$n],17)?></td>
+                                  <td><?php echo substr($innerArr[$n+1],8)?></td>
+                                  <td><?php echo substr($innerArr[$n+2],8)?></td>
+                                  <td><?php echo substr($innerArr[$n+3],6)?></td>
+                                  <td><?php echo substr($innerArr[$n+4],8)?></td>
+                                  <td><?php echo '<button type="button" class="btn btn-info onClick="update('.substr($innerArr[$n+1],13).');">Modificar</button>
+                                    <form action="" method="post">
+                                      <input type="hidden" name="num_reserva" value="'.substr($innerArr[$n],22).'">
+                                      <button type="submit"  class="btn btn-danger">Cancelar</button> 
+                                    </form>'?>
+                                  </td>
+                                </tr>
+                              <?php $n=2; //The first array is shorter than the others so the value must go up
+                              endfor; ?>
+                            </tfoot>
+                          </thead>
+                        </table>
+                      </div>
+                      <!-- /.card-body -->
+                    <?php
+				}else{
+                    echo "&nbsp;&nbsp; Error al obtener usuarios";
+				}
+              ?>
           </div>
           <section class="content">
             <div class="container-fluid">
