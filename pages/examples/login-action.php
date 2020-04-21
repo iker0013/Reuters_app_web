@@ -30,6 +30,9 @@
                 $num_emp = substr($num_emp[1],1,-1);
                 $adm = substr($adm[1],1,-1);
                 $user = substr($user[1],1,-2);
+		session_start();
+                $_SESSION["nombre_emp"]=$nombre;
+                $_SESSION["numero_emp"]=$num_emp;
                 //Validar si es administrador o usuario
                 if($adm=="1"){
                   header("Location: ../../indexAdmin.php?nombre=".$nombre."&num_emp=".$num_emp);
