@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -143,11 +143,15 @@
                                   $innerArr = explode(",", $array[$i]);
                                 ?>
                                 <tr>
-                                  <td><?php echo substr($innerArr[$n],13)?></td>
-                                  <td><?php echo substr($innerArr[$n+1],7, 11)?></td>
-                                  <td><?php echo substr($innerArr[$n+2],14)?></td>
-                                  <td><?php echo substr($innerArr[$n+3],13)?></td>
-                                  <td><button type="submit" class="btn btn-info">Modificar</button> <button type="button" class="btn btn-danger">Cancelar</button></td>
+                                  <td><?php echo substr($innerArr[$n+1],13)?></td>
+                                  <td><?php echo substr($innerArr[$n+2],7, 11)?></td>
+                                  <td><?php echo substr($innerArr[$n+3],14)?></td>
+                                  <td><?php echo substr($innerArr[$n+4],13)?></td>
+                                  <td><?php echo '<button type="button" class="btn btn-info">Modificar</button>
+                                    <form action="./mod_reserva-action.php" method="post">
+                                      <input type="hidden" name="num_reserva" value="'.substr($innerArr[$n],22).'">
+                                      <button type="submit"  class="btn btn-danger">Cancelar</button> </form>'?>
+                                  </td>
                                 </tr>
                               <?php $n=2; //The first array is shorter than the others so the value must go up
                               endfor; ?>
@@ -179,7 +183,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                           </div>
-                          <input type="text" value="27/02/2020" readonly class="form-control" >
+                          <input type="text" value="27/02/20" readonly class="form-control" >
                         </div>
                         <!-- /.input group -->
                       </div>
@@ -190,7 +194,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                           </div>
-                          <input type="text" value="22" readonly class="form-control" >
+                          <input type="text" value="" id="nHotdesk" readonly class="form-control" >
                           
                         </div>
                         <!-- /.input group -->
@@ -301,6 +305,11 @@
       "autoWidth": false,
     });
   });
+
+  function update(numHot){
+        document.getElementById("nHotdesk").value=numHot;
+  }
 </script>
+
 </body>
 </html>
