@@ -295,7 +295,7 @@
                               <th>Hora Fin</th>
                             </tr>
                             <tbody>
-                              <?php $n=1; 
+                              <?php $n=2; 
                                 for($i=0; $i<$rows-1; $i++): 
                                   $innerArr = explode(",", $array[$i]);
                                 ?>
@@ -308,7 +308,7 @@
                                   <td><?php echo substr($innerArr[$n+2],14)?></td>
                                   <td><?php echo substr($innerArr[$n+3],13)?></td>
                                 </tr>
-                              <?php $n=2; //The first array is shorter than the others so the value must go up
+                              <?php $n=3; //The first array is shorter than the others so the value must go up
                               endfor; ?>
                             </tbody>
                           </thead>
