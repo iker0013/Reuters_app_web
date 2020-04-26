@@ -30,6 +30,9 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
+<?php
+  session_start();
+?>
 <div class="wrapper">
   <!-- Navbar -->
 
@@ -48,13 +51,8 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img
-            src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/p960x960/79914140_2476795765892705_7171981350025560064_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=duVZOAg8MV4AX9L6jr0&_nc_ht=scontent-dfw5-1.xx&_nc_tp=6&oh=32e4887525664ad5bcb9d0dc65a0e60a&oe=5EEBEA52"
-            class="img-circle elevation-2" alt="User Image">
-        </div>
         <div class="info">
-          <a href="#" class="d-block">Jesús Torres</a>
+          <a href="#" class="d-block"><?php echo $_SESSION["nombre_emp"]?></a>
         </div>
       </div>
 
@@ -132,6 +130,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="card card-primary">
+              <form action="agregar_user-action.php" method="post">
               <div class="card-header">
                 <h3 class="card-title">Inserte los datos requeridos</h3>
               </div>
@@ -144,7 +143,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" name="numero">
                   </div>
                   <!-- /.input group -->
 				  
@@ -154,7 +153,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" name="nombre">
                   </div>
                   <!-- /.input group -->
 				  
@@ -164,7 +163,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" name="correo">
                   </div>
                   <!-- /.input group -->
 				  <label>Area:</label>
@@ -173,7 +172,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" name="area" >
                   </div>
                   <!-- /.input group -->
 				  <label>Contraseña:</label>
@@ -182,10 +181,10 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" name="pass">
                   </div>
                   <!-- /.input group -->
-				  
+				 
 				  
                 </div>
 				
@@ -195,6 +194,7 @@
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Agregar</button>
               </div>
+              </form> 
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
