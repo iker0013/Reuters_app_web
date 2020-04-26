@@ -34,12 +34,7 @@
     <?php
      //Variables from login
       session_start();
-      if(empty($_SESSION)){
-        $nombre = htmlspecialchars($_GET['nombre']);
-        $num_emp = htmlspecialchars($_GET['num_emp']); 
-        $_SESSION["nombre_emp"]=$nombre;
-        $_SESSION["numero_emp"]=$num_emp;
-       }
+      
     ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
