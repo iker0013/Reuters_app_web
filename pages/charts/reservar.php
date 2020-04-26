@@ -193,8 +193,9 @@
             <!-- /.card -->
           </div>
           <div class="col-md-6">
-
+            <form action="reservar_m-action.php" method="post">
             <div class="card card-danger">
+            
               <div class="card-header">
                 <h3 class="card-title">Reserva tu Hot Desk</h3>
               </div>
@@ -207,7 +208,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input type="date" class="form-control" >
+                    <input type="date" class="form-control" name="fecha">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -225,18 +226,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <select class="form-control select2bs4" style="width: 100%;">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                    </select>
+                    <input type="text" class="form-control" name="n_desk" >
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -250,11 +240,20 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-clock"></i></span>
                     </div>
-                    <select class="form-control select2bs4" style="width: 100%;">
-                      <option value="1">10:00 a.m.</option>
-                      <option value="2">11:00 a.m.</option>
-                      <option value="3">01:00 p.m.</option>
-                      <option value="4">03:00 p.m.</option>
+                    <select class="form-control select2bs4" name="hora_i" style="width: 100%;">
+                      <option value="08:00:00">08:00</option>
+                      <option value="09:00:00">09:00</option>
+                      <option value="10:00:00">10:00</option>
+                      <option value="11:00:00">11:00</option>
+                      <option value="12:00:00">12:00</option>
+                      <option value="13:00:00">13:00</option>
+                      <option value="14:00:00">14:00</option>
+                      <option value="15:00:00">15:00</option>
+                      <option value="16:00:00">16:00</option>
+                      <option value="17:00:00">17:00</option>
+                      <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
                     </select>
                   </div>
                   <!-- /.input group -->
@@ -267,12 +266,23 @@
 
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-laptop"></i></span>
+                      <span class="input-group-text"><i class="fas fa-clock"></i></span>
                     </div>
-                    <div class="icheck-primary d-inline">
-                    <label for="checkboxPrimary3">
-                        04:00 p.m.
-                    </label>
+                    <select class="form-control select2bs4"  name="hora_s" style="width: 100%;">
+                      <option value="09:00:00">09:00</option>
+                      <option value="10:00:00">10:00</option>
+                      <option value="11:00:00">11:00</option>
+                      <option value="12:00:00">12:00</option>
+                      <option value="13:00:00">13:00</option>
+                      <option value="14:00:00">14:00</option>
+                      <option value="15:00:00">15:00</option>
+                      <option value="16:00:00">16:00</option>
+                      <option value="17:00:00">17:00</option>
+                      <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
+                      <option value="21:00:00">21:00</option>
+                    </select>
                   </div>
                   
                   </div>
@@ -284,8 +294,10 @@
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Reservar</button>
               </div>
+              
               <!-- /.card-body -->
             </div>
+            </form>
             <!-- /.card -->
 
   
