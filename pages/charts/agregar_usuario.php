@@ -28,18 +28,38 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!--Nav bar-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../dist/css/nav_bar.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <?php
   session_start();
+  if(!isset($_SESSION["nombre_emp"])){
+		echo "<script> 
+			alert('No estas autorizado para ver esta pagina');
+			location.href='../examples/login.php';
+			</script>";
+  }
 ?>
-<div class="wrapper">
-  <!-- Navbar -->
 
+<div class="wrapper">
+<!-- Navbar -->
+  <div class="topnav" id="nav_mobile">
+    <div id="myLinks">
+        <a href="./modificar_usuario.php">Modificar usuario</a>
+        <a href="./agregar_usuario.php">Agregar usuario</a>
+        <a href="./reportes.php">Reportes</a>
+        <a href="../../indexAdmin.php">Hogar</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="navBar()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" id="aside1">
     <!-- Brand Logo -->
     <a href="" class="brand-link">
       <img src="https://globalriskinsights.com/wp-content/uploads/2016/03/Reuters-Logo.jpg" alt="AdminLTE Logo"
@@ -103,6 +123,11 @@
             </li>
           </ul>
         </nav>
+		<div class="user-panel mt-5 pb-3 mb-3 d-flex">
+          <div class="info">
+            <a href="../examples/login.php" class="nav-link">Log out</a>
+          </div>
+        </div>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -123,7 +148,19 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+    <script>
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+          document.getElementById("aside1").style.display="none";
+          function navBar() {
+          var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+          }
+        }
+      </script>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -157,7 +194,7 @@
                   </div>
                   <!-- /.input group -->
 				  
-				  <label>Correo:</label>
+				  <label>Correo (no es necesario agregar @...):</label>
 
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -181,7 +218,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" name="pass">
+                    <input type="password" class="form-control" name="pass">
                   </div>
                   <!-- /.input group -->
 				 
