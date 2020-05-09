@@ -17,7 +17,7 @@
         $status = "activo";
         $is_adm = 0;
         $is_user = 1;
-        $cadena = $num_emp.",".$nombre.",".$correo.",".$area.",".$pass.",".$status.",".$is_adm.",".$is_user;
+        $cadena = $num_emp.",".$nombre.",".$correo."@hotmail.com,".$area.",".$pass.",".$status.",".$is_adm.",".$is_user;
         try{
             //URL para mandar la infromación al API para que regrese la verificación
             $url = 'http://localhost:60863/api/registra_usuario/'.base64_encode($cadena);
@@ -29,15 +29,18 @@
             $cod= substr($cod[1],1,-1);
             //Validar usario existente
             if($cod=="1"){
-                echo "<h1>usuario insertado</h1>";
-			    header("Location: ./agregar_usuario.php");
+                echo "<script>window.alert('Usuario insertado con exito');
+			            location.href='./agregar_usuario.php';
+                    </script> ";
 		    }else{
-                echo "<h1>Hubo un error</h1>";
-                echo '<a href="./agregar_usuario.php" class="btn btn-info" >Regresar</a>';
+                echo "<script>window.alert('Error al agregar usuario, cheque los datos');
+			            location.href='./agregar_usuario.php';
+                    </script> ";
 		    }
 		}catch(PDOException $e){
-             echo "<h1>Hubo un error</h1>";
-             echo '<a href="./agregar_usuario.php" class="btn btn-info" >Regresar</a>';
+             echo "<script>window.alert('Error :".$e."');
+			            location.href='./agregar_usuario.php';
+                    </script> ";
 		}
 
     ?>
