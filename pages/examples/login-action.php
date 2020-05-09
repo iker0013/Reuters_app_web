@@ -30,20 +30,27 @@
                 $num_emp = substr($num_emp[1],1,-1);
                 $adm = substr($adm[1],1,-1);
                 $user = substr($user[1],1,-2);
-		session_start();
+                session_start();
                 $_SESSION["nombre_emp"]=$nombre;
                 $_SESSION["numero_emp"]=$num_emp;
+                $_SESSION["mail_emp"]=$strUserName;
                 //Validar si es administrador o usuario
                 if($adm=="1"){
-                  header("Location: ../../indexAdmin.php?nombre=".$nombre."&num_emp=".$num_emp);
+                  header("Location: ../../indexAdmin.php");
 			    }else if($user=="1"){
-                  header("Location: ../../index.php?nombre=".$nombre."&num_emp=".$num_emp);
+                  header("Location: ../../index.php");
 			    }
 		    }else{
-                header("Location: ./login.html");
+                echo "<script>window.alert('Contraseña o usuario incorrecto');
+			            window.location.href='./login.php';
+                    </script> ";
+
 		    }
 		}catch(PDOException $e){
-             header("Location: ./login.html");
+                echo "<script>window.alert('Hubo un error: ".$e."');
+			            location.href='./login.php';
+                    </script> ";
+              
 		}
 
     ?>
