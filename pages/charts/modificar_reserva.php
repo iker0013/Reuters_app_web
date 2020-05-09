@@ -17,18 +17,36 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!--Nav bar-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../dist/css/nav_bar.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <?php
   session_start();
+  if(!isset($_SESSION["nombre_emp"])){
+		echo "<script> 
+			alert('No estas autorizado para ver esta pagina');
+			location.href='../examples/login.php';
+			</script>";
+  }
 ?>
 <div class="wrapper">
   <!-- Navbar -->
-  
+  <div class="topnav" id="nav_mobile">
+    <div id="myLinks">
+        <a href="./modificar_reserva.php">Modificar Reserva</a>
+        <a href="./reservar.php">Reservar</a>
+        <a href="../../index.php">Hogar</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="navBar()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" id="aside1">
     <!-- Brand Logo -->
     <a href="" class="brand-link">
       <img src="https://globalriskinsights.com/wp-content/uploads/2016/03/Reuters-Logo.jpg" alt="AdminLTE Logo"
@@ -84,6 +102,11 @@
           </li>
         </ul>
       </nav>
+	  <div class="user-panel mt-5 pb-3 mb-3 d-flex">
+          <div class="info">
+            <a href="../examples/login.php" class="nav-link">Log out</a>
+          </div>
+        </div>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -106,7 +129,19 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    
+    <script>
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+          document.getElementById("aside1").style.display="none";
+          function navBar() {
+          var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+          }
+        }
+      </script>
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -147,10 +182,18 @@
                                   <td><?php echo substr($innerArr[$n+2],7, 11)?></td>
                                   <td><?php echo substr($innerArr[$n+3],14)?></td>
                                   <td><?php echo substr($innerArr[$n+4],13)?></td>
-                                  <td><?php echo '<button type="button" class="btn btn-info">Modificar</button>
+                                  <td><?php echo '<form action="datos_reserva.php" method="post">
+                                      <input type="hidden" name="num_reserv" value="'.substr($innerArr[$n],22).'">
+                                      <input type="hidden" name="num_desk" value="'.substr($innerArr[$n+1],13).'">
+                                      <input type="hidden" name="fecha" value="'.substr($innerArr[$n+2],7, 11).'">
+                                      <input type="hidden" name="hora_e" value="'.substr($innerArr[$n+3],14).'">
+                                      <input type="hidden" name="hora_s" value="'.substr($innerArr[$n+4],13).'">
+                                      <button type="submit"  class="btn btn-info">Modificar</button> 
+                                    </form>
                                     <form action="./mod_reserva-action.php" method="post">
                                       <input type="hidden" name="num_reserva" value="'.substr($innerArr[$n],22).'">
-                                      <button type="submit"  class="btn btn-danger">Cancelar</button> </form>'?>
+                                      <button type="submit"  class="btn btn-danger">Cancelar</button> 
+                                    </form>'?>
                                   </td>
                                 </tr>
                               <?php $n=2; //The first array is shorter than the others so the value must go up
@@ -166,103 +209,6 @@
 				}
               ?>
           </div>
-          <section class="content">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="card card-primary">
-                    <div class="card-header">
-                      <h3 class="card-title">Datos de la reservación</h3>
-                    </div>
-                    <div class="card-body">
-                      <!-- Date dd/mm/yyyy -->
-                      <div class="form-group">
-                        <label>Fecha:</label>
-      
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                          </div>
-                          <input type="text" value="27/02/20" readonly class="form-control" >
-                        </div>
-                        <!-- /.input group -->
-                      </div>
-                      <div class="form-group">
-                        <label>Número de Hot Desk:</label>
-      
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-address-card"></i></span>
-                          </div>
-                          <input type="text" value="" id="nHotdesk" readonly class="form-control" >
-                          
-                        </div>
-                        <!-- /.input group -->
-                      </div>
-                      <!-- phone mask -->
-                      <div class="form-group">
-                        <label>Hora Check In:</label>
-      
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                          </div>
-                          <select class="form-control select2bs4" style="width: 100%;">
-                            <option value="1">10:00 a.m.</option>
-                            <option value="2">11:00 a.m.</option>
-                            <option value="3">01:00 p.m.</option>
-                            <option value="4">03:00 p.m.</option>
-                          </select>
-                        </div>
-                        <!-- /.input group -->
-                      </div>
-
-                      <!-- /.form group -->
-      
-                      <!-- IP mask -->
-                      <div class="form-group">
-                        <label>Hora Check Out:</label>
-      
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-laptop"></i></span>
-                          </div>
-                          <div class="icheck-primary d-inline">
-                          <label for="checkboxPrimary3">
-                              04:00 p.m.
-                          </label>
-                        </div>
-                        
-                        </div>
-                        <!-- /.input group -->
-                      </div>
-                      <!-- /.form group -->
-      
-                    </div>
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Actualizar</button>
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-                  <!-- /.card -->
-      
-                  <!-- iCheck -->
-                  
-                  <!-- /.card -->
-      
-                  <!-- Bootstrap Switch -->
-                  
-                  <!-- /.card -->
-                </div>
-
-                <!-- /.col (left) -->
-               
-                <!-- /.col (right) -->
-              </div>
-              <!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </section>
-          <!-- /.card -->
           <!-- /.card -->
         </div>
         <!-- /.col -->
