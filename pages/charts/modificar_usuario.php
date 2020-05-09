@@ -17,18 +17,41 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!--Nav bar-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../dist/css/nav_bar.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <?php
   session_start();
+  if(!isset($_SESSION["nombre_emp"])){
+		echo "<script> 
+			alert('No estas autorizado para ver esta pagina');
+			location.href='../examples/login.php';
+			</script>";
+  }
 ?>
+
 <div class="wrapper">
+<!-- Navbar -->
+  <div class="topnav" id="nav_mobile">
+    <div id="myLinks">
+        <a href="./modificar_usuario.php">Modificar usuario</a>
+        <a href="./agregar_usuario.php">Agregar usuario</a>
+        <a href="./reportes.php">Reportes</a>
+        <a href="../../indexAdmin.php">Hogar</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="navBar()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  <!-- /.navbar -->
   <!-- Navbar -->
   
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" id="aside1">
     <!-- Brand Logo -->
     <a href="" class="brand-link">
       <img src="https://globalriskinsights.com/wp-content/uploads/2016/03/Reuters-Logo.jpg" alt="AdminLTE Logo"
@@ -92,6 +115,11 @@
             </li>
           </ul>
         </nav>
+		<div class="user-panel mt-5 pb-3 mb-3 d-flex">
+          <div class="info">
+            <a href="../examples/login.php" class="nav-link">Log out</a>
+          </div>
+        </div>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -114,7 +142,19 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+    <script>
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+          document.getElementById("aside1").style.display="none";
+          function navBar() {
+          var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+          }
+        }
+      </script>
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -157,11 +197,17 @@
                                   <td><?php echo substr($innerArr[$n+2],8)?></td>
                                   <td><?php echo substr($innerArr[$n+3],6)?></td>
                                   <td><?php echo substr($innerArr[$n+4],8)?></td>
-                                  <td><?php echo '<button type="button" class="btn btn-info onClick="update('.substr($innerArr[$n+1],13).');">Modificar</button>
-                                    <form action="" method="post">
-                                      <input type="hidden" name="num_reserva" value="'.substr($innerArr[$n],22).'">
-                                      <button type="submit"  class="btn btn-danger">Cancelar</button> 
-                                    </form>'?>
+                                  <td><?php echo ' <form action="datos_usuario.php" method="post">
+                                      <input type="hidden" name="num_user" value="'.substr($innerArr[$n],17).'">
+                                      <input type="hidden" name="nom_user" value="'.substr($innerArr[$n+1],8).'">
+                                      <input type="hidden" name="correo" value="'.substr($innerArr[$n+2],8).'">
+                                      <input type="hidden" name="area" value="'.substr($innerArr[$n+3],6).'">
+                                      <button type="submit"  class="btn btn-info">Modificar</button> 
+                                    </form>
+                                    <form action="baja_user-action.php" method="post">
+                                      <input type="hidden" name="num_user" value="'.substr($innerArr[$n],17).'">
+                                      <button type="submit"  class="btn btn-danger">Dar de baja</button> 
+                                    </form>';?>
                                   </td>
                                 </tr>
                               <?php $n=2; //The first array is shorter than the others so the value must go up
@@ -177,93 +223,6 @@
 				}
               ?>
           </div>
-          <section class="content">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="card card-primary">
-                    <div class="card-header">
-                      <h3 class="card-title">Datos del usuario</h3>
-                    </div>
-                    <div class="card-body">
-						<!-- Date dd/mm/yyyy -->
-						<div class="form-group">
-						<label>Numero de Empleado:</label>
-
-						<div class="input-group">
-							<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fa fa-address-card"></i></span>
-							</div>
-							<input type="text" class="form-control" >
-						</div>
-						<!-- /.input group -->
-				  
-						<label>Nombre:</label>
-
-						<div class="input-group">
-							<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fa fa-address-card"></i></span>
-							</div>
-							<input type="text" class="form-control" >
-						</div>
-						<!-- /.input group -->
-				  
-						<label>Correo:</label>
-
-						<div class="input-group">
-							<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fa fa-address-card"></i></span>
-							</div>
-							<input type="text" class="form-control" >
-						</div>
-						<!-- /.input group -->
-						<label>Area:</label>
-
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text"><i class="fa fa-address-card"></i></span>
-							</div>
-							<input type="text" class="form-control" >
-						</div>
-						<!-- /.input group -->
-						<label>Contraseña:</label>
-
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text"><i class="fa fa-address-card"></i></span>
-							</div>
-							<input type="text" class="form-control" >
-						</div>
-						<!-- /.input group -->
-					</div>
-				
-                
-
-              </div>
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Actualizar</button>
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-                  <!-- /.card -->
-      
-                  <!-- iCheck -->
-                  
-                  <!-- /.card -->
-      
-                  <!-- Bootstrap Switch -->
-                  
-                  <!-- /.card -->
-                </div>
-
-                <!-- /.col (left) -->
-               
-                <!-- /.col (right) -->
-              </div>
-              <!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </section>
-          <!-- /.card -->
           <!-- /.card -->
         </div>
         <!-- /.col -->
