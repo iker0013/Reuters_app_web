@@ -28,18 +28,40 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!--Nav bar-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../dist/css/nav_bar.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <?php
   session_start();
+  if(!isset($_SESSION["nombre_emp"])){
+		echo "<script> 
+			alert('No estas autorizado para ver esta pagina');
+			location.href='../examples/login.php';
+			</script>";
+  }
+  date_default_timezone_set('America/Mexico_City');
+  $fecha_hoy = date('Y-m-d');
+  $nueva_fecha = strtotime('+7 day', strtotime($fecha_hoy));
+  $nueva_fecha = date('Y-m-d', $nueva_fecha);
 ?>
 <div class="wrapper">
   <!-- Navbar -->
-
+  <div class="topnav" id="nav_mobile">
+    <div id="myLinks">
+        <a href="./modificar_reserva.php">Modificar Reserva</a>
+        <a href="./reservar.php">Reservar</a>
+        <a href="../../index.php">Hogar</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="navBar()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" id="aside1">
     <!-- Brand Logo -->
     <a href="" class="brand-link">
       <img src="https://globalriskinsights.com/wp-content/uploads/2016/03/Reuters-Logo.jpg" alt="AdminLTE Logo"
@@ -95,6 +117,11 @@
           </li>
         </ul>
       </nav>
+	  <div class="user-panel mt-5 pb-3 mb-3 d-flex">
+          <div class="info">
+            <a href="../examples/login.php" class="nav-link">Log out</a>
+          </div>
+        </div>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -115,12 +142,25 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+    <script>
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+          document.getElementById("aside1").style.display="none";
+          function navBar() {
+          var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+          }
+        }
+      </script>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-6">
+            <form action="reservar_a-action.php" method="post">
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Reserva tu Hot Desk (Asignación automática)</h3>
@@ -134,7 +174,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input type="date" class="form-control" >
+                        <?php echo '<input type="date" class="form-control" name="fecha_a" min="'.$fecha_hoy.'" max="'.$nueva_fecha.'">'; ?>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -146,11 +186,20 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-clock"></i></span>
                     </div>
-                    <select class="form-control select2bs4" style="width: 100%;">
-                      <option value="1">10:00 a.m.</option>
-                      <option value="2">11:00 a.m.</option>
-                      <option value="3">01:00 p.m.</option>
-                      <option value="4">03:00 p.m.</option>
+                    <select class="form-control select2bs4" name="hora_a_i" style="width: 100%;">
+                      <option value="08:00:00">08:00</option>
+                      <option value="09:00:00">09:00</option>
+                      <option value="10:00:00">10:00</option>
+                      <option value="11:00:00">11:00</option>
+                      <option value="12:00:00">12:00</option>
+                      <option value="13:00:00">13:00</option>
+                      <option value="14:00:00">14:00</option>
+                      <option value="15:00:00">15:00</option>
+                      <option value="16:00:00">16:00</option>
+                      <option value="17:00:00">17:00</option>
+                      <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
                     </select>
                   </div>
                   <!-- /.input group -->
@@ -163,12 +212,23 @@
 
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-laptop"></i></span>
+                      <span class="input-group-text"><i class="fas fa-clock"></i></span>
                     </div>
-                    <div class="icheck-primary d-inline">
-                    <label for="checkboxPrimary3">
-                        04:00 p.m.
-                    </label>
+                    <select class="form-control select2bs4"  name="hora_a_s" style="width: 100%;">
+                      <option value="09:00:00">09:00</option>
+                      <option value="10:00:00">10:00</option>
+                      <option value="11:00:00">11:00</option>
+                      <option value="12:00:00">12:00</option>
+                      <option value="13:00:00">13:00</option>
+                      <option value="14:00:00">14:00</option>
+                      <option value="15:00:00">15:00</option>
+                      <option value="16:00:00">16:00</option>
+                      <option value="17:00:00">17:00</option>
+                      <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
+                      <option value="21:00:00">21:00</option>
+                    </select>
                   </div>
                   
                   </div>
@@ -182,6 +242,7 @@
               </div>
               <!-- /.card-body -->
             </div>
+            </form>
             <!-- /.card -->
 
             <!-- iCheck -->
@@ -208,7 +269,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input type="date" class="form-control" name="fecha">
+                        <?php echo '<input type="date" class="form-control" name="fecha" min="'.$fecha_hoy.'" max="'.$nueva_fecha.'">'; ?>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -226,12 +287,11 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" name="n_desk" >
+                    <input type="number" class="form-control" name="n_desk" min="1" max="200">
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
-
                 <!-- phone mask -->
                 <div class="form-group">
                   <label>Hora Check In:</label>
@@ -259,7 +319,6 @@
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
-
                 <!-- IP mask -->
                 <div class="form-group">
                   <label>Hora Check Out:</label>
