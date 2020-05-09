@@ -22,17 +22,20 @@
             $cod= substr($cod[1],1,-1);
             //Validar usario existente
             if($cod=="1"){
-                echo "<h1>Reservación cancelada</h1>";
-			    header("Location: ./modificar_reserva.php");
+                echo "<script>
+			            location.href='./modificar_reserva.php';
+                        window.alert('Reservación cancelada con exito');
+                    </script> ";
 		    }else{
-                echo "<h1>Hubo un error</h1>";
-                echo '<a href="./modificar_reserva.php" class="btn btn-info" >Regresar</a>';
+                echo "<script>window.alert('Error al cancelar la reservación');
+			            location.href='./modificar_reserva.php';
+                    </script> ";
 		    }
 		}catch(PDOException $e){
-             echo "<h1>Hubo un error</h1>";
-             echo '<a href="./modificar_reserva.php" class="btn btn-info" >Regresar</a>';
+             echo "<script>window.alert('Error inesperado :".$e."');
+			            location.href='./modificar_reserva.php';
+                    </script> ";
 		}
-
     ?>
 </body>
 </html>
