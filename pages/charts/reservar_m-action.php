@@ -9,34 +9,43 @@
 <body class="hold-transition login-page">
     <?php
         session_start();
-        $fecha = htmlspecialchars($_POST['fecha']);
-        $n_desk = htmlspecialchars($_POST['n_desk']);
-        $hora_i = htmlspecialchars($_POST['hora_i']);
-        $hora_s = htmlspecialchars($_POST['hora_s']);
-        $cadena = $fecha.",".$n_desk.",".$_SESSION["numero_emp"].",".$hora_i.",".$hora_s;
-        echo $cadena;
-        
-        try{
-            //URL para mandar la infromación al API para que regrese la verificación
-            $url = 'http://localhost:60863/api/registra_manual/'.base64_encode($cadena);
+        $fecha = htmlspecialchars($_POST['fecha_a']);
+        $hora_i = htmlspecialchars($_POST['hora_a_i']);
+        $hora_s = htmlspecialchars($_POST['hora_a_s']);
+        $cadena = $fecha.",".$_SESSION["numero_emp"].",".$hora_i.",".$hora_s;
+        $hi= substr($hora_i,0,2);
+        $hf= substr($hora_s,0,2);
+        if(intval($hi)>=intval($hf)){
+            echo "<script>window.alert('La hora de Check In debe ser menor que la de Check out');
+			        location.href='./reservar.php';
+                </script> ";
+		}else{
+           try{
+                //URL para mandar la infromación al API para que regrese la verificación
+                $url = 'http://localhost:60863/api/reserva_automatica/'.base64_encode($cadena);
             
-            $contents = file_get_contents($url);
-            //Separar los valores de la cadena obtenida
-            $array = explode(",", $contents);
-            $cod = explode(":", $array[0]);
-            $cod= substr($cod[1],1,-1);
-            //Validar usario existente
-            if($cod=="1"){
-                echo "<h1>usuario insertado</h1>";
-			    header("Location: ./reservar.php");
-		    }else{
-                echo "<h1>Hubo un error</h1>";
-                echo '<a href="./reservar.php" class="btn btn-info" >Regresar</a>';
-		    }
-		}catch(PDOException $e){
-             echo "<h1>Hubo un error</h1>";
-             echo '<a href="./reservar.php" class="btn btn-info" >Regresar</a>';
-		}
+                $contents = file_get_contents($url);
+                //Separar los valores de la cadena obtenida
+                $array = explode(",", $contents);
+                $cod = explode(":", $array[0]);
+                $cod= substr($cod[1],1,-1);
+                //Validar usario existente
+                if($cod=="1"){
+                    echo "<script>window.alert('Reserva realizada');
+			                location.href='./reservar.php';
+                        </script> ";
+		        }else{
+                    echo "<script>window.alert('Error :".$contents."');
+			                location.href='./reservar.php';
+                        </script> ";
+		        }
+		    }catch(PDOException $e){
+                 echo "<script>window.alert('Error :".$e."');
+			            location.href='./reservar.php';
+                    </script> ";
+		    } 
+        }
+        
 
     ?>
 </body>
