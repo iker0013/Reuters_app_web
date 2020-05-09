@@ -29,13 +29,38 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!--Nav bar-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../dist/css/nav_bar.css">
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini">
+<?php
+  session_start();
+  if(!isset($_SESSION["nombre_emp"])){
+		echo "<script> 
+			alert('No estas autorizado para ver esta pagina');
+			location.href='../examples/login.php';
+			</script>";
+  }
+?>
+  
   <div class="wrapper">
-
+  <!-- Navbar -->
+  <div class="topnav" id="nav_mobile">
+    <div id="myLinks">
+        <a href="./modificar_usuario.php">Modificar usuario</a>
+        <a href="./agregar_usuario.php">Agregar usuario</a>
+        <a href="./reportes.php">Reportes</a>
+        <a href="../../indexAdmin.php">Hogar</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="navBar()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  <!-- /.navbar -->
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" id="aside1">
       <!-- Brand Logo -->
       <a href="" class="brand-link">
         <img src="https://globalriskinsights.com/wp-content/uploads/2016/03/Reuters-Logo.jpg" alt="AdminLTE Logo"
@@ -47,13 +72,8 @@
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img
-              src="https://scontent-dfw5-1.xx.fbcdn.net/v/t1.0-9/p960x960/79914140_2476795765892705_7171981350025560064_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=duVZOAg8MV4AX9L6jr0&_nc_ht=scontent-dfw5-1.xx&_nc_tp=6&oh=32e4887525664ad5bcb9d0dc65a0e60a&oe=5EEBEA52"
-              class="img-circle elevation-2" alt="User Image">
-          </div>
           <div class="info">
-            <a href="#" class="d-block">Jesús Torres</a>
+            <a href="#" class="d-block"><?php echo $_SESSION["nombre_emp"]?></a>
           </div>
         </div>
 
@@ -104,11 +124,16 @@
             </li>
           </ul>
         </nav>
+		<div class="user-panel mt-5 pb-3 mb-3 d-flex">
+          <div class="info">
+            <a href="../examples/login.php" class="nav-link">Log out</a>
+          </div>
+        </div>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
     </aside>
-
+    
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -126,7 +151,19 @@
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content-header -->
-	  
+	  <script>
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+          document.getElementById("aside1").style.display="none";
+          function navBar() {
+          var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+          }
+        }
+      </script>
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
